@@ -490,17 +490,40 @@
 <script>
 const bgm = document.getElementById('bgm');
 const btn = document.getElementById('music-btn');
-bgm.volume = 0.38;
+bgm.volume = 0;
 
-btn.addEventListener('click', () => {
-  if (bgm.paused) bgm.play().then(()=>btn.classList.add('playing')).catch(()=>{});
-  else { bgm.pause(); btn.classList.remove('playing'); }
+// 嘗試靜音自動播放（繞過瀏覽器限制）
+bgm.muted = true;
+bgm.play().then(() => {
+  // 播放成功後立刻淡入音量
+  bgm.muted = false;
+  let v = 0;
+  const fade = setInterval(() => {
+    v = Math.min(v + 0.02, 0.38);
+    bgm.volume = v;
+    if (v >= 0.38) clearInterval(fade);
+  }, 60);
+  btn.classList.add('playing');
+}).catch(() => {
+  // 自動播放被封鎖 → 等第一次互動再播
+  bgm.muted = false;
+  bgm.volume = 0.38;
+  const tryPlay = () => {
+    bgm.play().then(() => btn.classList.add('playing')).catch(() => {});
+    document.removeEventListener('click', tryPlay);
+    document.removeEventListener('touchstart', tryPlay);
+    document.removeEventListener('keydown', tryPlay);
+  };
+  document.addEventListener('click', tryPlay, { once: true });
+  document.addEventListener('touchstart', tryPlay, { once: true });
+  document.addEventListener('keydown', tryPlay, { once: true });
 });
 
-document.addEventListener('click', function once() {
-  if (bgm.paused) bgm.play().then(()=>btn.classList.add('playing')).catch(()=>{});
-  document.removeEventListener('click', once);
-}, { once: true });
+btn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (bgm.paused) bgm.play().then(() => btn.classList.add('playing')).catch(() => {});
+  else { bgm.pause(); btn.classList.remove('playing'); }
+});
 
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
