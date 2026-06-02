@@ -373,6 +373,132 @@
 
     footer a { color: var(--accent); text-decoration: none; }
 
+    /* ── GALLERY ── */
+    .gallery-section {
+      background: var(--warm-white);
+      padding: 80px 0;
+    }
+
+    .gallery-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      aspect-ratio: 16/9;
+      background: #e8e2d8;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 12px 40px rgba(196,122,43,0.18);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s;
+    }
+
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    .gallery-num {
+      position: absolute;
+      bottom: 10px;
+      left: 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #fff;
+      background: rgba(0,0,0,0.35);
+      padding: 3px 8px;
+      border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(10,8,6,0.92);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    #lightbox.open { display: flex; }
+
+    #lb-img {
+      max-width: 92vw;
+      max-height: 84vh;
+      border-radius: 6px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+      object-fit: contain;
+    }
+
+    #lb-close {
+      position: absolute;
+      top: 20px;
+      right: 28px;
+      font-size: 32px;
+      color: #fff;
+      cursor: pointer;
+      background: none;
+      border: none;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    #lb-close:hover { opacity: 1; }
+
+    #lb-prev, #lb-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 28px;
+      color: #fff;
+      cursor: pointer;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.7;
+      transition: opacity 0.2s, background 0.2s;
+    }
+
+    #lb-prev:hover, #lb-next:hover { opacity: 1; background: rgba(196,122,43,0.4); }
+    #lb-prev { left: 20px; }
+    #lb-next { right: 20px; }
+
+    #lb-caption {
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      margin-top: 14px;
+      letter-spacing: 0.1em;
+    }
+
     /* ── FADE-IN ── */
     .fade-section {
       opacity: 0;
@@ -556,6 +682,37 @@
     <li><div><strong>科技樂觀需要人性假設：</strong>相信工具會帶來好結果，前提是相信人類大多數時候願意用工具改善世界。</div></li>
   </ul>
 </section>
+
+<!-- GALLERY -->
+<section class="gallery-section fade-section">
+  <div class="gallery-inner">
+    <div class="section-label">影像紀錄</div>
+    <h2 class="section-title">Jensen Huang's AI Legacy</h2>
+    <div class="divider"></div>
+    <p>以下影像擷取自《Jensen Huang's AI Legacy》原版資料，記錄黃仁勳在 AI 時代的思想與歷程。</p>
+    <div class="gallery-grid" id="gallery-grid">
+      <div class="gallery-item" data-idx="0"><img src="images/page001_img00.png" alt="Page 1" loading="lazy"><div class="gallery-num">01</div></div>
+      <div class="gallery-item" data-idx="1"><img src="images/page002_img00.png" alt="Page 2" loading="lazy"><div class="gallery-num">02</div></div>
+      <div class="gallery-item" data-idx="2"><img src="images/page003_img00.png" alt="Page 3" loading="lazy"><div class="gallery-num">03</div></div>
+      <div class="gallery-item" data-idx="3"><img src="images/page004_img00.png" alt="Page 4" loading="lazy"><div class="gallery-num">04</div></div>
+      <div class="gallery-item" data-idx="4"><img src="images/page005_img00.png" alt="Page 5" loading="lazy"><div class="gallery-num">05</div></div>
+      <div class="gallery-item" data-idx="5"><img src="images/page006_img00.png" alt="Page 6" loading="lazy"><div class="gallery-num">06</div></div>
+      <div class="gallery-item" data-idx="6"><img src="images/page007_img00.png" alt="Page 7" loading="lazy"><div class="gallery-num">07</div></div>
+      <div class="gallery-item" data-idx="7"><img src="images/page008_img00.png" alt="Page 8" loading="lazy"><div class="gallery-num">08</div></div>
+      <div class="gallery-item" data-idx="8"><img src="images/page009_img00.png" alt="Page 9" loading="lazy"><div class="gallery-num">09</div></div>
+      <div class="gallery-item" data-idx="9"><img src="images/page010_img00.png" alt="Page 10" loading="lazy"><div class="gallery-num">10</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lb-close" aria-label="關閉">✕</button>
+  <button id="lb-prev" aria-label="上一張">‹</button>
+  <img id="lb-img" src="" alt="">
+  <button id="lb-next" aria-label="下一張">›</button>
+  <div id="lb-caption"></div>
+</div>
 
 <!-- QUOTE -->
 <div class="quote-section fade-section">
@@ -749,6 +906,41 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-section, .tl-item').forEach(el => io.observe(el));
+
+// Lightbox
+const images = Array.from(document.querySelectorAll('.gallery-item img')).map(img => img.src);
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbCaption = document.getElementById('lb-caption');
+let lbIdx = 0;
+
+function openLb(idx) {
+  lbIdx = idx;
+  lbImg.src = images[idx];
+  lbCaption.textContent = `${idx + 1} / ${images.length}`;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLb() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.gallery-item').forEach(el => {
+  el.addEventListener('click', () => openLb(+el.dataset.idx));
+});
+
+document.getElementById('lb-close').addEventListener('click', closeLb);
+document.getElementById('lb-prev').addEventListener('click', () => openLb((lbIdx - 1 + images.length) % images.length));
+document.getElementById('lb-next').addEventListener('click', () => openLb((lbIdx + 1) % images.length));
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowLeft') openLb((lbIdx - 1 + images.length) % images.length);
+  if (e.key === 'ArrowRight') openLb((lbIdx + 1) % images.length);
+});
 </script>
 
 </body>
