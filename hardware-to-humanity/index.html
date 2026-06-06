@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2b1710">
+  <title>Hardware to Humanity｜人工智慧革命與產業未來</title>
+  <meta name="description" content="從極致協同運算走向智能商品化，重新理解人類在 AI 時代的超能力。">
+  <style>
+    :root {
+      --ink: #271812;
+      --muted: #745e52;
+      --cream: #fff8ec;
+      --paper: rgba(255, 251, 242, .86);
+      --amber: #e78b31;
+      --gold: #ffc66f;
+      --copper: #9f4f26;
+      --line: rgba(110, 62, 34, .18);
+      --shadow: 0 26px 80px rgba(76, 37, 17, .18);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 211, 140, .75), transparent 30rem),
+        radial-gradient(circle at 88% 28%, rgba(207, 102, 47, .22), transparent 36rem),
+        linear-gradient(135deg, #fffaf0 0%, #f5dfc5 48%, #f8ead8 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      z-index: 20;
+    }
+
+    a { color: inherit; }
+    button { font: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      z-index: 30;
+      width: min(1120px, calc(100% - 28px));
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 13px 11px 20px;
+      border: 1px solid rgba(255, 255, 255, .55);
+      border-radius: 999px;
+      background: rgba(255, 248, 236, .72);
+      box-shadow: 0 12px 34px rgba(66, 34, 18, .12);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .nav-actions { display: flex; gap: 8px; }
+    .pill {
+      min-height: 40px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 16px;
+      color: #fffaf2;
+      background: #2e1a12;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .pill:hover { transform: translateY(-2px); background: #61331d; }
+    .pill.secondary {
+      color: var(--ink);
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid var(--line);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: minmax(0, 1.03fr) minmax(380px, .97fr);
+      align-items: center;
+      gap: clamp(30px, 5vw, 80px);
+      width: min(1220px, calc(100% - 40px));
+      margin: auto;
+      padding: 130px 0 80px;
+    }
+
+    .hero-copy { position: relative; z-index: 2; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      color: var(--copper);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-family: "Songti TC", "Noto Serif TC", serif;
+      font-size: clamp(52px, 7.7vw, 112px);
+      font-weight: 700;
+      letter-spacing: -.065em;
+      line-height: .93;
+    }
+    h1 span {
+      display: block;
+      margin-top: 14px;
+      color: transparent;
+      font-size: .42em;
+      letter-spacing: .06em;
+      line-height: 1.2;
+      -webkit-text-stroke: 1px rgba(79, 42, 22, .78);
+    }
+
+    .lead {
+      max-width: 650px;
+      margin: 30px 0 34px;
+      color: #5f493e;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.75;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-actions .pill { min-height: 52px; padding: 0 23px; }
+    .scroll-note {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .14em;
+      writing-mode: vertical-rl;
+    }
+
+    .scene {
+      position: relative;
+      height: min(68vw, 700px);
+      min-height: 540px;
+      overflow: hidden;
+      perspective: 1200px;
+      filter: drop-shadow(0 35px 32px rgba(68, 28, 10, .23));
+    }
+    .scene-glow {
+      position: absolute;
+      inset: 16% 5% 10%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 194, 98, .82), rgba(210, 98, 35, .22) 48%, transparent 70%);
+      filter: blur(24px);
+      animation: breathe 5s ease-in-out infinite;
+    }
+    .stack {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(430px, 88%);
+      height: 410px;
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%) rotateX(62deg) rotateZ(-34deg);
+      animation: floatStack 9s ease-in-out infinite;
+    }
+    .layer {
+      --z: 0px;
+      position: absolute;
+      inset: 70px 35px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 241, 215, .9);
+      border-radius: 28px;
+      color: white;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.35), transparent 36%),
+        linear-gradient(135deg, #6d2b18, #cf6d2f 55%, #ffbe65);
+      box-shadow:
+        0 0 0 6px rgba(117, 48, 23, .08),
+        0 28px 45px rgba(67, 24, 9, .25),
+        inset 0 0 30px rgba(255,255,255,.18);
+      transform: translateZ(var(--z));
+      animation: layerPulse 4.8s ease-in-out infinite;
+    }
+    .layer::after {
+      content: "";
+      position: absolute;
+      inset: 17px;
+      border: 1px dashed rgba(255,255,255,.36);
+      border-radius: 18px;
+    }
+    .layer span {
+      position: relative;
+      z-index: 2;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-shadow: 0 2px 12px rgba(58,18,6,.55);
+    }
+    .layer:nth-child(1) { --z: 0px; filter: brightness(.7); }
+    .layer:nth-child(2) { --z: 62px; filter: brightness(.82); animation-delay: -.5s; }
+    .layer:nth-child(3) { --z: 124px; filter: brightness(.94); animation-delay: -1s; }
+    .layer:nth-child(4) { --z: 186px; filter: brightness(1.05); animation-delay: -1.5s; }
+    .layer:nth-child(5) { --z: 248px; filter: brightness(1.15); animation-delay: -2s; }
+    .core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 88px;
+      aspect-ratio: 1;
+      border-radius: 24px;
+      background: radial-gradient(circle at 32% 25%, #fff8c9, #ffb34c 42%, #a84220 75%);
+      box-shadow: 0 0 55px #ffbe67, inset 0 0 20px white;
+      transform: translate(-50%, -50%) translateZ(320px);
+      animation: core 2.8s ease-in-out infinite;
+    }
+    .orbit {
+      position: absolute;
+      inset: 6%;
+      border: 1px solid rgba(124, 61, 28, .25);
+      border-radius: 50%;
+      transform: rotateX(68deg);
+      animation: orbit 10s linear infinite;
+    }
+    .orbit::before {
+      content: "";
+      position: absolute;
+      top: 48%;
+      left: -7px;
+      width: 15px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #fff4c1;
+      box-shadow: 0 0 26px #e87932;
+    }
+
+    .manifesto {
+      position: relative;
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto 130px;
+      padding: clamp(36px, 6vw, 76px);
+      overflow: hidden;
+      color: #fff9ee;
+      border-radius: 42px;
+      background: #2b1710;
+      box-shadow: var(--shadow);
+    }
+    .manifesto::after {
+      content: "HUMAN FIRST";
+      position: absolute;
+      right: -20px;
+      bottom: -34px;
+      color: rgba(255,255,255,.055);
+      font-size: clamp(70px, 14vw, 180px);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .manifesto p {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0;
+      font-family: "Songti TC", "Noto Serif TC", serif;
+      font-size: clamp(28px, 4.1vw, 56px);
+      line-height: 1.45;
+    }
+    .manifesto em { color: var(--gold); font-style: normal; }
+
+    .chapters {
+      width: min(1180px, calc(100% - 40px));
+      margin: auto;
+    }
+    .chapter {
+      min-height: 80svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: clamp(34px, 7vw, 96px);
+      padding: 55px 0 120px;
+    }
+    .chapter:nth-child(even) .chapter-image { order: 2; }
+    .chapter-image {
+      position: relative;
+      transform: rotate(-1.5deg);
+    }
+    .chapter:nth-child(even) .chapter-image { transform: rotate(1.5deg); }
+    .chapter-image::before {
+      content: "";
+      position: absolute;
+      inset: 18px -18px -18px 18px;
+      border: 1px solid rgba(112, 58, 29, .25);
+      border-radius: 30px;
+    }
+    .chapter-image img {
+      position: relative;
+      width: 100%;
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+    }
+    .chapter-no {
+      color: var(--copper);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .22em;
+    }
+    h2 {
+      margin: 14px 0 22px;
+      font-family: "Songti TC", "Noto Serif TC", serif;
+      font-size: clamp(36px, 5vw, 65px);
+      letter-spacing: -.04em;
+      line-height: 1.12;
+    }
+    .chapter p {
+      margin: 0 0 18px;
+      color: #624c40;
+      font-size: clamp(17px, 1.65vw, 21px);
+      line-height: 1.9;
+    }
+    .quote {
+      margin-top: 28px;
+      padding: 20px 0 20px 23px;
+      border-left: 3px solid var(--amber);
+      color: #3d251a;
+      font-weight: 800;
+    }
+
+    .gallery {
+      width: min(1180px, calc(100% - 40px));
+      margin: 20px auto 130px;
+    }
+    .gallery h2 { max-width: 760px; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+    .gallery-grid img {
+      border-radius: 22px;
+      box-shadow: 0 18px 50px rgba(73, 33, 14, .16);
+    }
+
+    footer {
+      padding: 120px 20px 150px;
+      text-align: center;
+      color: #fff8ea;
+      background:
+        linear-gradient(rgba(39, 19, 10, .66), rgba(39, 19, 10, .9)),
+        url("assets/page-12.png") center / cover;
+    }
+    footer strong {
+      display: block;
+      margin-bottom: 18px;
+      font-family: "Songti TC", serif;
+      font-size: clamp(54px, 10vw, 130px);
+      letter-spacing: .04em;
+    }
+    footer p { margin: auto; max-width: 760px; font-size: 20px; line-height: 1.8; }
+
+    .player {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 35;
+      width: min(430px, calc(100% - 36px));
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 24px;
+      background: rgba(44, 24, 16, .9);
+      box-shadow: 0 20px 60px rgba(45, 20, 9, .3);
+      backdrop-filter: blur(18px);
+      color: #fff8eb;
+      transform: translateY(calc(100% - 62px));
+      transition: transform .35s ease;
+    }
+    .player.open { transform: translateY(0); }
+    .player-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 30px;
+      cursor: pointer;
+    }
+    .player-title { font-weight: 800; }
+    .player-title small { color: #e7b883; font-weight: 500; }
+    .player-toggle {
+      border: 0;
+      color: white;
+      background: transparent;
+      cursor: pointer;
+    }
+    .player-body { padding-top: 16px; }
+    .controls { display: flex; flex-wrap: wrap; gap: 8px; }
+    .control {
+      flex: 1 1 auto;
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      cursor: pointer;
+    }
+    .control.primary { color: #2a160e; background: var(--gold); border-color: transparent; font-weight: 800; }
+    .control.active { background: #9f4f26; }
+    .progress {
+      height: 4px;
+      margin: 16px 2px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.15);
+      overflow: hidden;
+    }
+    .progress span { display: block; width: 0; height: 100%; background: var(--gold); transition: width .2s; }
+    .status { min-height: 38px; color: #dcc6b3; font-size: 13px; line-height: 1.5; }
+    .speed-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; font-size: 13px; }
+    input[type="range"] { flex: 1; accent-color: var(--gold); }
+
+    .reveal { opacity: 0; transform: translateY(34px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @keyframes floatStack {
+      0%, 100% { transform: translate(-50%, -50%) rotateX(62deg) rotateZ(-34deg) translateY(0); }
+      50% { transform: translate(-50%, -50%) rotateX(59deg) rotateZ(-27deg) translateY(-18px); }
+    }
+    @keyframes layerPulse { 50% { box-shadow: 0 0 0 8px rgba(117,48,23,.05), 0 35px 60px rgba(67,24,9,.31), inset 0 0 38px rgba(255,255,255,.25); } }
+    @keyframes core { 50% { transform: translate(-50%, -50%) translateZ(340px) scale(1.08); } }
+    @keyframes orbit { to { transform: rotateX(68deg) rotateZ(360deg); } }
+    @keyframes breathe { 50% { transform: scale(1.09); opacity: .78; } }
+
+    @media (max-width: 850px) {
+      .nav .brand { max-width: 150px; line-height: 1.2; }
+      .nav-actions .secondary { display: none; }
+      .hero { grid-template-columns: 1fr; padding-top: 145px; }
+      .scene { min-height: 480px; height: 58svh; }
+      .scroll-note { display: none; }
+      .chapter { grid-template-columns: 1fr; min-height: auto; padding-bottom: 95px; }
+      .chapter:nth-child(even) .chapter-image { order: initial; }
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .nav { top: 10px; padding-left: 15px; }
+      .brand { font-size: 11px; }
+      .pill { padding: 0 12px; }
+      .hero, .chapters, .gallery, .manifesto { width: min(100% - 24px, 1180px); }
+      h1 { font-size: 52px; }
+      .scene { min-height: 390px; }
+      .stack { width: 310px; height: 330px; }
+      .layer { inset: 62px 22px; }
+      .manifesto { margin-bottom: 85px; border-radius: 28px; }
+      .player { right: 10px; bottom: 10px; width: calc(100% - 20px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="主要導覽">
+    <div class="brand">Hardware to Humanity</div>
+    <div class="nav-actions">
+      <button class="pill secondary" id="musicTop">開啟配樂</button>
+      <button class="pill" id="narrateTop">開始語音導讀</button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy reveal">
+      <div class="eyebrow">人工智慧革命與產業未來</div>
+      <h1>硬體，走向人性<span>Hardware to Humanity</span></h1>
+      <p class="lead">從極致協同運算走向智能商品化。當聰明不再稀缺，我們真正需要重新定義的，是人類無法被量產的超能力。</p>
+      <div class="hero-actions">
+        <a class="pill" href="#story" style="display:inline-grid;place-items:center;text-decoration:none">進入故事</a>
+        <button class="pill secondary" id="openPlayer">開啟聲音體驗</button>
+      </div>
+    </div>
+
+    <div class="scene" aria-label="由能源、晶片、基礎設施、AI 模型與應用程式組成的 3D 五層結構">
+      <div class="scene-glow"></div>
+      <div class="orbit"></div>
+      <div class="stack">
+        <div class="layer"><span>能源</span></div>
+        <div class="layer"><span>晶片</span></div>
+        <div class="layer"><span>基礎設施</span></div>
+        <div class="layer"><span>AI 模型</span></div>
+        <div class="layer"><span>應用程式</span></div>
+        <div class="core" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="scroll-note">SCROLL TO EXPLORE</div>
+  </header>
+
+  <main id="story">
+    <section class="manifesto reveal">
+      <p>機器可以精準地<em>理解</em>一切邏輯，卻無法真正<em>感受</em>哪怕一絲情緒。智慧會商品化，而人性的重量不會。</p>
+    </section>
+
+    <div class="chapters">
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-02.png" alt="AI 五層蛋糕：能源、晶片、基礎設施、AI 模型與應用程式"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">01 / THE STACK</div>
+          <h2>由底向上的全面重塑</h2>
+          <p>這場革命像一座層層堆疊的基層：從能源、晶片與基礎設施，到強大的 AI 模型，最終化為改變社會的應用程式。</p>
+          <p>它不是單一領域的進步，而是一次從根本翻轉醫療、製造與人類生活方式的產業重構。</p>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-03.png" alt="晶片與散熱系統的極致協同設計"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">02 / CO-DESIGN</div>
+          <h2>突破物理極限的協同</h2>
+          <p>未知的規模早已超出單一晶片能解決的範圍。架構、晶片、系統、網路與散熱工程，必須像一個生命體般精準契合。</p>
+          <p>真正難以複製的護城河，也不只是硬體本身，而是全球研究者與開發者共同建立的龐大生態。</p>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-04.png" alt="從傳統資料倉儲走向智能代幣工廠"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">03 / AGENTIC ERA</div>
+          <h2>從檔案庫到智能工廠</h2>
+          <p>過去的電腦像一座靜靜等待檢索的資料倉庫。未來的基礎設施，則是持續生產智能代幣、理解情境並制定計畫的工廠。</p>
+          <p>它不再只是被動回答，而會呼叫工具、拆解任務，與人形成自主協作。</p>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-05.png" alt="人類與 AI 協作完成任務"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">04 / AUGMENTATION</div>
+          <h2>AI 是自動化任務，不是目的</h2>
+          <p>技術躍進改變的是任務形式，不是人存在的目的。把重複工作交給機器，人便能把注意力放回判斷、創造與關係。</p>
+          <div class="quote">你不會被 AI 取代，但極可能被懂得使用 AI 的人取代。</div>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-06.png" alt="晶片與人眼對照，呈現認知與感受的差異"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">05 / THE LIMIT</div>
+          <h2>能理解，卻無法感受</h2>
+          <p>晶片可以辨識焦慮、運算緊張與興奮，卻終究只是矽晶。它能處理情緒的訊號，卻沒有親身經歷情緒的生命。</p>
+          <p>認知可以被計算，主觀體驗卻構成人類不可化約的核心。</p>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-07.png" alt="長者與孩子牽手，象徵生命經驗"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">06 / LIVED EXPERIENCE</div>
+          <h2>無法被運算的重量</h2>
+          <p>生命的豐富藏在希望、恐懼、深沉的愛與心碎，也藏在我們對死亡與失去的畏懼。</p>
+          <p>這些親身經驗讓相同情境在不同人心中產生截然不同的深度，並非隨機種子所能類比。</p>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-08.png" alt="智慧晶片與人性心臟、雙手的比較"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">07 / HUMANITY</div>
+          <h2>智能不等於人性</h2>
+          <p>智能是一種解決問題的功能，包含感知、理解與推理；人性則承載同理、善意、責任與關係。</p>
+          <p>兩者可以彼此增強，卻不是同一件事。科技越強大，這條界線越需要清楚。</p>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-09.png" alt="水龍頭流出光點，象徵智能像水電般普及"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">08 / COMMODITIZATION</div>
+          <h2>智能將如水與電普及</h2>
+          <p>強大的運算與知識取得能力，終將不再是少數菁英的專利。當每個人都能輕易取得，聰明便失去原本的稀缺性。</p>
+          <p>這正是智能走向商品化的時刻，也迫使我們重新思考人的價值。</p>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-10.png" alt="堅毅的人物肖像，象徵同理心、慷慨與決心"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">09 / SUPERPOWER</div>
+          <h2>不可量產的超能力</h2>
+          <p>當聰明不再是絕對優勢，真正稀缺的是忍耐痛苦、跌倒後再次站起、願意伸出援手的慷慨與同理。</p>
+          <div class="quote">同理心、慷慨與決心，才是決定我們能走多遠的力量。</div>
+        </div>
+      </section>
+
+      <section class="chapter">
+        <div class="chapter-image reveal"><img src="assets/page-11.png" alt="清洗盤子的雙手與會議場景，象徵謙卑領導"></div>
+        <div class="chapter-copy reveal">
+          <div class="chapter-no">10 / LEADERSHIP</div>
+          <h2>洗碗工的領導哲學</h2>
+          <p>領導者不必是房間裡最聰明的人。真正的領導力，是謙卑地協調與凝聚頂尖人才，讓團隊發揮超越個體的力量。</p>
+          <p>成就遠大於一個智能標籤。品格與凝聚力，才是組織持續前進的根基。</p>
+        </div>
+      </section>
+    </div>
+
+    <section class="gallery">
+      <div class="chapter-no">THE ORIGINAL DECK</div>
+      <h2>來自 PDF 的完整視覺敘事</h2>
+      <div class="gallery-grid">
+        <img class="reveal" src="assets/page-01.png" alt="人工智慧革命與產業未來封面">
+        <img class="reveal" src="assets/page-12.png" alt="Human First 結語">
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>HUMAN FIRST</strong>
+    <p>把焦慮轉化為啟發。人工智慧是放大人類價值的工具，而品格、同理與生命經驗，才是我們之所以為人的印記。</p>
+  </footer>
+
+  <aside class="player" id="player" aria-label="聲音體驗控制器">
+    <div class="player-head" id="playerHead">
+      <div class="player-title">聲音體驗 <small>男性沉穩語音・暖色配樂</small></div>
+      <button class="player-toggle" aria-label="展開或收合聲音控制">⌃</button>
+    </div>
+    <div class="player-body">
+      <div class="controls">
+        <button class="control primary" id="narrate">開始朗讀</button>
+        <button class="control" id="pause">暫停</button>
+        <button class="control" id="stop">停止</button>
+        <button class="control" id="music">播放配樂</button>
+      </div>
+      <div class="progress"><span id="progressBar"></span></div>
+      <div class="status" id="status">準備就緒。朗讀時會自動降低配樂音量。</div>
+      <div class="speed-row">
+        <label for="speed">語速</label>
+        <input id="speed" type="range" min="0.7" max="1.25" step="0.05" value="0.9">
+        <span id="speedValue">0.90×</span>
+      </div>
+    </div>
+  </aside>
+
+  <audio id="bgm" src="assets/有限之光2.mp3" loop preload="metadata"></audio>
+  <audio id="voiceover" src="assets/男性沉穩旁白.mp3" preload="metadata"></audio>
+
+  <script>
+    const narration = [
+      "歡迎。我們正處在一個不可思議的交會點上。當機器的運算能力達到巔峰，我們不得不重新思考，什麼才是產業的未來，什麼又是生而為人的價值。今天，我想和各位分享，在這個從極致協同運算走向智能商品化的時代裡，我們該如何重新定義自己的超能力，並在變革中探討意識的本質與人性的重量。",
+      "想像一下，這場革命就像是一座由底向上堆疊的基層。從最基礎的能源，到精密雕琢的晶片，再到支撐一切的基礎設施與強大的人工智慧模型，最終化為改變社會的應用程式。這不是單一領域的進步，這是一次從根本上翻轉醫療、製造與人類生活方式的全面重塑。",
+      "面對如此巨大的未知，我們早已無法依賴單一的晶片來解決問題。這需要一種突破物理極限的極致協同設計，從架構、晶片、系統到散熱工程，每一個環節都必須完美契合。而我們一路走來最堅實的終極護城河，其實是基於全球無數研究人員與開發者共建的龐大安裝基數。",
+      "過去的電腦，像是一座靜靜等待被靜態儲存與檢索的檔案庫。但未來的基礎設施，將會是一座持續生產智能代幣的工廠。它不再只是被動地回答，而是具備了理解情境、制定計畫與呼叫工具的自主協作能力。我們正在見證，代理式智慧崛起的時刻。",
+      "許多人恐懼，這樣的機器會奪走我們的工作。但歷史總是告訴我們，技術的躍進，改變的只是任務的形式，而不是我們存在的目的。你不會被機器取代，但懂得善用它的人，將會走向更寬廣的世界。這是一場重新定義我們生命價值的旅程。",
+      "儘管晶片能夠精準地辨識你的焦慮、運算出你的緊張或興奮，但它終究只是冰冷的矽晶。它沒有生命，它能極致地認知與理解一切邏輯，卻永遠無法真正感受哪怕是一絲一毫的情緒共鳴。",
+      "因為生命真正的豐富，在於那些無法被量化的主觀體驗。是我們心中的希望與恐懼，是深沉的愛戀與心碎，更是我們對死亡的畏懼。正是這些無法被運算的重量，造就了人類面對相同情境時產生截然不同且具備深度的行為。這與兩台電腦因隨機種子不同而產出不同結果的本質，完全是兩回事。",
+      "長久以來，這個社會過度神化了高學歷與高智能。但我們必須明白，智能只是一種解決問題的功能，涵蓋了感知、理解與推理。它與人性這無可取代的生命本質，是兩個絕對獨立的概念，我們必須在兩者之間劃清界線。",
+      "在不久的將來，這種強大的運算與獲取知識的能力，將不再是少數菁英的專利。它會像水和電一樣，流進每一個人的生活裡。當智能變得如此普及、任何人都能輕易取得時，它的稀缺性便不復存在，正式走向商品化。",
+      "那麼，當聰明不再是絕對的優勢，我們還剩下什麼？真正的超能力，其實一直都在我們身上。那是對痛苦的忍耐，是跌倒後再站起來的決心，是願意對他人伸出援手的慷慨與同理。這些無法被量產的品格，才是決定我們能走多遠的關鍵。",
+      "常常有人笑稱，我在核心團隊裡就像個洗碗工。我的身邊圍繞著無數在各領域學歷更高、比我聰明的超人。但生命的成就，遠遠大於單一的智能標籤。真正的領導力真諦，在於你如何謙卑地協調與凝聚頂尖人才，讓團隊發揮出超越極限的力量。",
+      "時代的巨浪雖然洶湧，但我們無須恐慌。把焦慮轉化為前進的啟發吧，這世界永遠會是人類優先。人工智慧，只是放大人類價值、讓我們變得更強大的絕佳工具。去追求更高的生命價值，修煉品格與同理心，因為那才是我們之所以為人的最美印記。"
+    ];
+
+    const bgm = document.getElementById("bgm");
+    const voiceover = document.getElementById("voiceover");
+    const player = document.getElementById("player");
+    const status = document.getElementById("status");
+    const progressBar = document.getElementById("progressBar");
+    const narrateButton = document.getElementById("narrate");
+    const musicButton = document.getElementById("music");
+    const speed = document.getElementById("speed");
+    let reading = false;
+    let paused = false;
+    let musicOn = false;
+
+    bgm.volume = .34;
+
+    function updateProgress() {
+      const percentage = voiceover.duration ? (voiceover.currentTime / voiceover.duration) * 100 : 0;
+      progressBar.style.width = `${percentage}%`;
+      const elapsed = Math.floor(voiceover.currentTime);
+      const total = Math.floor(voiceover.duration || 0);
+      const stamp = value => `${Math.floor(value / 60)}:${String(value % 60).padStart(2, "0")}`;
+      if (reading) status.textContent = `台灣中文男性沉穩旁白｜${stamp(elapsed)} / ${stamp(total)}`;
+    }
+
+    async function startNarration() {
+      player.classList.add("open");
+      try {
+        voiceover.playbackRate = Number(speed.value);
+        await voiceover.play();
+        paused = false;
+        reading = true;
+        bgm.volume = musicOn ? .12 : .34;
+        narrateButton.textContent = "朗讀中";
+        status.textContent = "台灣中文男性沉穩旁白播放中";
+      } catch {
+        status.textContent = "請再次點擊開始朗讀，瀏覽器需要由您啟動聲音。";
+      }
+    }
+
+    function pauseNarration() {
+      if (!reading) return;
+      if (paused) {
+        voiceover.play();
+        paused = false;
+        document.getElementById("pause").textContent = "暫停";
+        status.textContent = "男性旁白繼續播放";
+      } else {
+        voiceover.pause();
+        paused = true;
+        document.getElementById("pause").textContent = "繼續";
+        status.textContent = "朗讀已暫停";
+      }
+    }
+
+    function finishNarration(completed = true) {
+      reading = false;
+      paused = false;
+      narrateButton.textContent = "重新朗讀";
+      document.getElementById("pause").textContent = "暫停";
+      bgm.volume = .34;
+      if (completed) {
+        progressBar.style.width = "100%";
+        status.textContent = "導讀完成。願科技放大人性，而不是取代人性。";
+      }
+    }
+
+    function stopNarration() {
+      voiceover.pause();
+      voiceover.currentTime = 0;
+      reading = false;
+      paused = false;
+      updateProgress();
+      narrateButton.textContent = "開始朗讀";
+      document.getElementById("pause").textContent = "暫停";
+      bgm.volume = .34;
+      status.textContent = "朗讀已停止。";
+    }
+
+    async function toggleMusic() {
+      try {
+        if (bgm.paused) {
+          await bgm.play();
+          musicOn = true;
+          bgm.volume = reading ? .12 : .34;
+          musicButton.textContent = "關閉配樂";
+          musicButton.classList.add("active");
+          document.getElementById("musicTop").textContent = "關閉配樂";
+        } else {
+          bgm.pause();
+          musicOn = false;
+          musicButton.textContent = "播放配樂";
+          musicButton.classList.remove("active");
+          document.getElementById("musicTop").textContent = "開啟配樂";
+        }
+      } catch {
+        status.textContent = "請再次點擊播放配樂，瀏覽器需要由您啟動聲音。";
+      }
+    }
+
+    document.getElementById("playerHead").addEventListener("click", () => player.classList.toggle("open"));
+    document.getElementById("openPlayer").addEventListener("click", () => player.classList.add("open"));
+    document.getElementById("narrate").addEventListener("click", startNarration);
+    document.getElementById("narrateTop").addEventListener("click", startNarration);
+    document.getElementById("pause").addEventListener("click", pauseNarration);
+    document.getElementById("stop").addEventListener("click", stopNarration);
+    document.getElementById("music").addEventListener("click", toggleMusic);
+    document.getElementById("musicTop").addEventListener("click", toggleMusic);
+    speed.addEventListener("input", () => {
+      document.getElementById("speedValue").textContent = `${Number(speed.value).toFixed(2)}×`;
+      voiceover.playbackRate = Number(speed.value);
+    });
+    voiceover.addEventListener("timeupdate", updateProgress);
+    voiceover.addEventListener("ended", () => finishNarration(true));
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
