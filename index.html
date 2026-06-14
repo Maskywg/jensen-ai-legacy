@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>向死而生的科技浪漫與傳承</title>
+  <meta property="og:title" content="向死而生的科技浪漫與傳承">
+  <meta property="og:description" content="黃仁勳談生死意識、知識傳承，與對 AI 時代人類未來的樂觀想像">
+  <meta property="og:image" content="https://maskywg.github.io/jensen-ai-legacy/images/hero_crop.jpg">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://maskywg.github.io/jensen-ai-legacy/images/hero_crop.jpg">
   <style>
     :root {
       --bg: #faf8f4;
@@ -47,12 +53,39 @@
       opacity: 0.65;
     }
 
+    /* hero image */
+    .hero-img-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .hero-img-wrap img {
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+      display: block;
+      /* 只佔左半 */
+      max-width: 50%;
+      object-position: center;
+      -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
+      mask-image: linear-gradient(to right, black 60%, transparent 100%);
+    }
+
     .hero-meta {
       position: relative;
       z-index: 3;
-      text-align: center;
-      max-width: 760px;
-      padding: 0 24px;
+      text-align: left;
+      max-width: 480px;
+      padding: 0 40px;
+      margin-left: auto;
+      margin-right: 5vw;
+    }
+
+    @media (max-width: 680px) {
+      .hero-img-wrap img { max-width: 100%; -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%); mask-image: linear-gradient(to bottom, black 50%, transparent 100%); }
+      .hero-meta { text-align: center; margin: 0 auto; }
     }
 
     .hero-kicker {
@@ -291,6 +324,9 @@
 <!-- HERO -->
 <section id="hero">
   <canvas id="canvas3d"></canvas>
+  <div class="hero-img-wrap">
+    <img src="images/hero_crop.jpg" alt="Jensen Huang AI Legacy">
+  </div>
   <div class="hero-meta">
     <div class="hero-kicker">Jensen Huang · AI Legacy · 2026</div>
     <h1 class="hero-title">向死而生的<br>科技浪漫與傳承</h1>
